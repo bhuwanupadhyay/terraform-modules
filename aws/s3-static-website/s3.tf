@@ -1,27 +1,8 @@
-data "template_file" "policy" {
-  template = <<JSON
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "PublicReadGetObject",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::www.${var.bucket_name}/*"
-        }
-    ]
-}
-JSON
-  vars     = {
-  }
-}
-
 # S3 bucket for website.
 resource "aws_s3_bucket" "www_bucket" {
   bucket = "www.${var.bucket_name}"
   acl    = "public-read"
-  policy = templatefile("s3-policy.json", { bucket = "www.${var.bucket_name}" })
+  policy = templatefile("${path.module}/s3-policy.json", { bucket = "www.${var.bucket_name}" })
 
   cors_rule {
     allowed_headers = ["Authorization", "Content-Length"]
@@ -42,7 +23,7 @@ resource "aws_s3_bucket" "www_bucket" {
 resource "aws_s3_bucket" "root_bucket" {
   bucket = var.bucket_name
   acl    = "public-read"
-  policy = templatefile("s3-policy.json", { bucket = var.bucket_name })
+  policy = templatefile("${path.module}/s3-policy.json", { bucket = var.bucket_name })
 
   website {
     redirect_all_requests_to = "https://www.${var.domain_name}"
