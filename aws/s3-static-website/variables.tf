@@ -1,8 +1,3 @@
-variable "aws_region" {
-  type        = string
-  description = "The region name for the website."
-}
-
 variable "domain_name" {
   type        = string
   description = "The domain name for the website."
