@@ -8,13 +8,12 @@ data "template_file" "policy" {
             "Effect": "Allow",
             "Principal": "*",
             "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::${bucket}/*"
+            "Resource": "arn:aws:s3:::www.${var.bucket_name}/*"
         }
     ]
 }
 JSON
   vars     = {
-    bucket = "www.${var.bucket_name}"
   }
 }
 
