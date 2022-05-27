@@ -36,8 +36,6 @@ resource "aws_cloudfront_distribution" "www_s3_distribution" {
       cookies {
         forward = "none"
       }
-
-      headers = ["Origin"]
     }
 
     viewer_protocol_policy = "redirect-to-https"
