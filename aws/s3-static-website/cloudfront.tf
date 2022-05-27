@@ -31,7 +31,7 @@ resource "aws_cloudfront_distribution" "www_s3_distribution" {
     target_origin_id = "S3-www.${var.bucket_name}"
 
     forwarded_values {
-      query_string = false
+      query_string = true
 
       cookies {
         forward = "none"
