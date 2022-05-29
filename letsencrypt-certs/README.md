@@ -23,8 +23,9 @@ module "certs" {
 }
 ```
 
-> Note: `production_ssl = true` will use production server of letsencrypt. (https://acme-v02.api.letsencrypt.org/directory)
-> Note: `production_ssl = false` will use staging server of letsencrypt. (https://acme-staging-v02.api.letsencrypt.org/directory)
+### Hints 
+- `production_ssl = true` will use production server of letsencrypt. (https://acme-v02.api.letsencrypt.org/directory)
+- `production_ssl = false` will use staging server of letsencrypt. (https://acme-staging-v02.api.letsencrypt.org/directory)
 
 ### Initialize module
 
