@@ -57,6 +57,35 @@ az storage file download -s $bucket_to_store_certificates -p tls.crt --dest ./bu
 az storage file download -s $bucket_to_store_certificates -p tls.key --dest ./build/ssl-certs/tls.key
 ```
 
+### Testing
+
+```bash
+#### Deploy HA Proxy Ingress with TLS
+
+helm repo add haproxy-ingress https://haproxy-ingress.github.io/charts
+
+kubectl create ns ingress-controller
+
+kubectl create secret tls domain-certs --key="./build/ssl-certs/tls.key" --cert="./build/ssl-certs/tls.crt" -n ingress-controller
+
+helm install haproxy-ingress haproxy-ingress/haproxy-ingress\
+  --create-namespace --namespace=ingress-controller
+
+#### Deploy Nginx Ingress with TLS
+
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+
+kubectl create ns ingress-nginx
+
+kubectl create secret tls domain-certs --key="./build/ssl-certs/tls.key" --cert="./build/ssl-certs/tls.crt" -n ingress-nginx
+
+helm install ingress-nginx ingress-nginx/ingress-nginx\
+  --create-namespace \
+  --namespace=ingress-nginx \
+  --set "extraArgs.default-ssl-certificate=ingress-nginx/domain-certs" \
+  --set "controller.service.annotations.external-dns\.alpha\.kubernetes\.io\/hostname=*.<release_app_domain>"
+```
+
 ### Destroy module
 
 ```bash
