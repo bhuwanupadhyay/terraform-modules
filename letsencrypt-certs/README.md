@@ -1,6 +1,6 @@
 # Letsencrypt Certs
 
-This module will generate ssl certificates using different cloud provider dns challenge using Letsencrypt. 
+This module will generate ssl certificates for different cloud provider with their dns challenge using Letsencrypt. 
 Also, it stores generated certificates in defined bucket in that cloud provider under `ssl-certs` folder. 
 
 ## Usage
