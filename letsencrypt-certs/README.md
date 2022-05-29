@@ -17,7 +17,7 @@ module "certs" {
     "*.example2.<release_app_domain>",
     "*.xyz.example3.<release_app_domain>",
   ]
-  staging_bucket_name = "<s3_bucket_to_store_certificates>"
+  staging_bucket_name = "<bucket_to_store_certificates>"
   release_name        = "<certs_release_name>"
   production_ssl      = true
 }
