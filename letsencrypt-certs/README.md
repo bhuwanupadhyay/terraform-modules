@@ -41,6 +41,22 @@ terraform apply
 ```
 
 
+### Download Certs
+
+```bash
+export bucket_to_store_certificates=<bucket_to_store_certificates>
+# AWS
+aws s3 cp s3://$bucket_to_store_certificates/ssl-certs/ ./build/ssl-certs/ --recursive
+
+# GCP
+gsutil rsync -d -r gs://$bucket_to_store_certificates/ssl-certs/ ./build/ssl-certs/
+
+# AZURE
+az storage file download -s $bucket_to_store_certificates -p issuer.pem --dest ./build/ssl-certs/issuer.pem
+az storage file download -s $bucket_to_store_certificates -p tls.crt --dest ./build/ssl-certs/tls.crt
+az storage file download -s $bucket_to_store_certificates -p tls.key --dest ./build/ssl-certs/tls.key
+```
+
 ### Destroy module
 
 ```bash
