@@ -2,10 +2,13 @@ provider "acme" {
   server_url = var.production_ssl ? "https://acme-v02.api.letsencrypt.org/directory" : "https://acme-staging-v02.api.letsencrypt.org/directory"
 }
 
-variable "production_ssl" { type = bool default = false }
 variable "admin_email" {}
 variable "release_domain" {}
 variable "release_wildcards_domain" { type = set(string) }
+variable "production_ssl" {
+  type = bool
+  default = false
+}
 variable "dns_challenge_provider" {}
 variable "dns_challenge_config" {}
 

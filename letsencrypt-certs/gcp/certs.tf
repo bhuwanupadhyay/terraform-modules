@@ -1,10 +1,11 @@
 module "certs" {
-  source                 = "../base"
+  source                   = "../base"
   admin_email              = var.admin_email
   release_domain           = var.release_domain
   release_wildcards_domain = var.release_wildcards_domain
-  dns_challenge_provider = "gcloud"
-  dns_challenge_config   = {
+  production_ssl           = var.production_ssl
+  dns_challenge_provider   = "gcloud"
+  dns_challenge_config     = {
     GCE_PROJECT = data.google_client_config.current.project
   }
 }
@@ -29,8 +30,7 @@ resource "google_storage_bucket_object" "issuer_pem_objects" {
 
 resource "null_resource" "after_certificates" {
   depends_on = [
-    google_storage_bucket_object.certificate_pem_objects,
-    google_storage_bucket_object.issuer_pem_objects,
+    google_storage_bucket_object.certificate_pem_objects, google_storage_bucket_object.issuer_pem_objects,
     google_storage_bucket_object.private_key_pem_objects
   ]
 }

@@ -3,6 +3,7 @@ module "certs" {
   admin_email              = var.admin_email
   release_domain           = var.release_domain
   release_wildcards_domain = var.release_wildcards_domain
+  production_ssl           = var.production_ssl
   dns_challenge_provider   = "route53"
   dns_challenge_config     = {
     AWS_HOSTED_ZONE_ID = data.aws_route53_zone.dns_zone.zone_id

@@ -1,10 +1,11 @@
 module "certs" {
-  source                 = "../base"
+  source                   = "../base"
   admin_email              = var.admin_email
   release_domain           = var.release_domain
   release_wildcards_domain = var.release_wildcards_domain
-  dns_challenge_provider = "azure"
-  dns_challenge_config   = {
+  production_ssl           = var.production_ssl
+  dns_challenge_provider   = "azure"
+  dns_challenge_config     = {
     AZURE_RESOURCE_GROUP  = data.azurerm_resource_group.rg.name
     AZURE_ZONE_NAME       = data.azurerm_dns_zone.dns_zone.name
     AZURE_CLIENT_ID       = var.service_principal_application_id
@@ -45,8 +46,7 @@ resource "azurerm_storage_blob" "issuer_pem_objects" {
 
 resource "null_resource" "after_certificates" {
   depends_on = [
-    azurerm_storage_blob.certificate_pem_objects,
-    azurerm_storage_blob.issuer_pem_objects,
+    azurerm_storage_blob.certificate_pem_objects, azurerm_storage_blob.issuer_pem_objects,
     azurerm_storage_blob.private_key_pem_objects
   ]
 }
